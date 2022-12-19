@@ -11,4 +11,6 @@ public interface MemberRepository {
     Optional<Member> findById(Long id);//Null 데이터를 반환하는 것을 막기 위함 자바8 기능
     Optional<Member> findByName(String name);
     List<Member> findAll();
+
+    void clearStore();
 }

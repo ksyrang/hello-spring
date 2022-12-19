@@ -1,7 +1,10 @@
 package hello.hellospring.service;
 
 import hello.hellospring.domain.Member;
+import hello.hellospring.repository.MemoryMemberRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -10,12 +13,26 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MemberServiceTest {
 
-    MemberService memSvc = new MemberService();
+//    MemberService memSvc = new MemberService();
+//    MemoryMemberRepository meberRepository = new MemoryMemberRepository();
+MemberService memSvc;
+    MemoryMemberRepository meberRepository;
+    @BeforeEach //테스트 함수들이 동작전에 행동하는 함수
+    public void beforeEach(){
+        meberRepository = new MemoryMemberRepository();
+        memSvc = new MemberService(meberRepository);
+        //위와 같은 형태를 의존성 주입이라 한다.
+    }
+    @AfterEach //모든 테스트 함수들이 동작을 완료한 후에 행동하는 함수
+    public  void afterEach(){
+        meberRepository.clearStore();
+    }
+
     @Test
     void 회원가입() {
         //given : 무슨 데이터를 줄건지
         Member mem = new Member();
-        mem.setName("Hello");
+        mem.setName("spring");
 
 
         //when : 언제 행동할지
